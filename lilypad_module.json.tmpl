@@ -1,0 +1,49 @@
+{
+  "machine": {
+    "gpu": 1,
+    "gpus": [
+        {
+            "vram": 24000
+        }
+    ],
+    "cpu": 2000,
+    "ram": 24000
+  },
+  "job": {
+    "APIVersion": "V1beta1",
+    "Spec": {
+      "Deal": {
+        "Concurrency": 1
+      },
+      "Docker": {
+        "Entrypoint": ["python", "/workspace/run_bark.py"],
+        "EnvironmentVariables": [
+          {{ if .prompt }}"PROMPT={{ .prompt | js }}"{{ else }}"PROMPT=Today I want to talk about something that has been on my mind a lot lately. How AI is reshaping the way we work, create and live our lives."{{ end }},
+          {{ if .voice }}"VOICE={{ .voice | js }}"{{ else }}"VOICE=heart"{{ end }},
+          "HF_HUB_OFFLINE=1"
+        ],
+        "Image": "lilypadnetwork/lilypad-kokoro-module:latest"
+      },
+      "Engine": "Docker",
+      "Network": {
+        "Type": "None"
+      },
+      "PublisherSpec": {
+        "Type": "IPFS"
+      },
+      "Resources": {
+        "GPU": "1",
+        "Memory": "24000MB"
+      },
+      "Timeout": 3600,
+      "Verifier": "Noop",
+      "Outputs": [
+        {
+          "Name": "outputs",
+          "StorageSource": "IPFS",
+          "Path": "/outputs"
+        }
+      ]
+    }
+  }
+}
