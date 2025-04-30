@@ -18,7 +18,7 @@
       "Docker": {
         "Entrypoint": ["python", "/workspace/run_kokoro.py"],
         "EnvironmentVariables": [
-          "VOICE=puck",
+          {{ if .voice }}"{{ subst "VOICE=%s" .voice }}",{{ end }}
           {{ if .prompt }}"PROMPT={{ .prompt | js }}"{{ else }}"PROMPT=Today I want to talk about something that has been on my mind a lot lately. How AI is reshaping the way we work, create and live our lives."{{ end }},
           "HF_HUB_OFFLINE=1"
         ],
