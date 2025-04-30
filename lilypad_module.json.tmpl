@@ -18,8 +18,8 @@
       "Docker": {
         "Entrypoint": ["python", "/workspace/run_kokoro.py"],
         "EnvironmentVariables": [
+        {{ if .voice }}"VOICE={{ .voice | js }}"{{ else }}"VOICE=heart"{{ end }},
           {{ if .prompt }}"PROMPT={{ .prompt | js }}"{{ else }}"PROMPT=Today I want to talk about something that has been on my mind a lot lately. How AI is reshaping the way we work, create and live our lives."{{ end }},
-          {{ if .voice }}"VOICE={{ .voice | js }}"{{ else }}"VOICE=heart"{{ end }},
           "HF_HUB_OFFLINE=1"
         ],
         "Image": "lilypadnetwork/lilypad-kokoro-module:latest"
